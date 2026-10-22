@@ -1,7 +1,7 @@
 import { combinePresetAndAppleSplashScreens, defineConfig, minimal2023Preset } from "@vite-pwa/assets-generator/config";
 
 // The app's own background as sRGB hex: its page colour (surface-1), converted from oklch if the CSS uses it.
-// The splash screens, the manifest, theme-color and the boot screen all take it from here, so opening the app
+// The splash screens, the manifest, theme-color and index.html's first paint all take it from here, so opening the app
 // is one colour end to end. A splash a shade off the app's ground reads as a flash (tashkeela: #151A18 splash
 // against a #040705 app).
 export const background = "#000000";
@@ -19,8 +19,7 @@ export const preset = combinePresetAndAppleSplashScreens(
     maskable: { sizes: [512], padding: 0.3, resizeOptions: { background, fit: "contain" } },
   },
   {
-    // Logo at 35% of the screen's shorter side; the default 70% read too big (tashkeela). The boot screen's
-    // CSS (min(35vmin, 280px)) matches, so the splash hands over to it without the logo moving.
+    // Logo at 35% of the screen's shorter side; the default 70% read too big (tashkeela).
     padding: 0.65,
     resizeOptions: { background, fit: "contain" },
     name: (landscape, size) => `apple-splash-${landscape ? "landscape" : "portrait"}-${size.width}x${size.height}.png`,

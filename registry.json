@@ -42,26 +42,16 @@
       ]
     },
     {
-      "name": "boot",
-      "type": "registry:block",
-      "title": "Boot screen",
-      "description": "The logo stays up from the splash until the first real screen has rendered, one colour end to end, so opening the app never flashes a blank screen.",
-      "docs": "1. index.html, after #root: <div id=\"boot\" role=\"img\" aria-label=\"App\"><!--boot-logo--></div>, styled #boot { position: fixed; inset: 0; z-index: 2147483647; display: grid; place-items: center; background: %BOOT_BG%; transition: opacity 0.2s } #boot.out { opacity: 0; pointer-events: none } #boot svg { width: min(35vmin, 280px); aspect-ratio: 1; border-radius: 22.27%; overflow: hidden }, plus html { background: %BOOT_BG% } and theme-color %BOOT_BG%. 2. vite.config.ts: bootScreen({ background, logo }) from ./vite-boot-screen, background from pwa-assets.config (the app-assets item). 3. Client entry, before React mounts: startBoot(), and bootReady() on the first render, e.g. const stop = router.subscribe(\"onRendered\", () => { stop(); bootReady(); }). 4. A screen that is only a loading placeholder calls useBootHold(isLoading).",
-      "files": [
-        { "path": "registry/lib/boot.ts", "type": "registry:lib" },
-        { "path": "registry/vite/boot-screen.ts", "type": "registry:file", "target": "vite-boot-screen.ts" }
-      ]
-    },
-    {
       "name": "app-assets",
       "type": "registry:block",
       "title": "Icons and splash screens",
-      "description": "Icons, favicon, maskable icon and every Apple splash screen from one logo and one background colour, the same colour the boot screen and manifest use.",
+      "description": "Icons, favicon, maskable icon and every Apple splash screen from one logo and one background colour, the same colour the manifest and index.html's first paint use.",
       "devDependencies": ["@vite-pwa/assets-generator@2.0.0"],
-      "docs": "Set background (the app's page colour as hex) and logo in pwa-assets.config.ts, put <!-- pwa-assets:start --> and <!-- pwa-assets:end --> in index.html's head, then run bun scripts/generate-assets.ts after every logo change. Give the manifest the same background as background_color and theme_color.",
+      "docs": "Set background (the app's page colour as hex) and logo in pwa-assets.config.ts, put <!-- pwa-assets:start --> and <!-- pwa-assets:end --> in index.html's head, then run bun scripts/generate-assets.ts after every logo change. Give the manifest the same background as background_color and theme_color. vite.config.ts: appBackground(background) from ./vite-app-background, and index.html gets <meta name=\"theme-color\" content=\"%APP_BG%\"> and <style>html { background: %APP_BG% }</style> in its head. No in-app logo screen after the splash: on iOS it shows after white frames and reads as a second splash (pwa skill, Launch traps).",
       "files": [
         { "path": "registry/assets/pwa-assets.config.ts", "type": "registry:file", "target": "pwa-assets.config.ts" },
-        { "path": "registry/assets/scripts/generate-assets.ts", "type": "registry:file", "target": "scripts/generate-assets.ts" }
+        { "path": "registry/assets/scripts/generate-assets.ts", "type": "registry:file", "target": "scripts/generate-assets.ts" },
+        { "path": "registry/vite/app-background.ts", "type": "registry:file", "target": "vite-app-background.ts" }
       ]
     }
   ]

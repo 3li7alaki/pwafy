@@ -26,16 +26,15 @@ npx shadcn add 3li7alaki/pwafy/tab-bar
 | `pull-refresh` | a screen shows server data that can go stale | `onRefresh` returns the refetch promise; installed apps only unless `enabled` |
 | `install` | people should keep coming back | `captureInstallPrompt()` in the client entry, before React mounts |
 | `standalone` | anything should differ between a tab and the installed app | `useStandalone()` in render, never `matchMedia` in a state initializer |
-| `app-assets` | always, before the first install | set `background` and `logo` in `pwa-assets.config.ts`, run `scripts/generate-assets.ts` after every logo change |
-| `boot` | always, with `app-assets` | `#boot` after `#root` in `index.html`, `bootScreen()` in `vite.config.ts`, `startBoot()` then `bootReady()` on the first render, `useBootHold(loading)` on placeholders |
+| `app-assets` | always, before the first install | set `background` and `logo` in `pwa-assets.config.ts`, `appBackground(background)` in `vite.config.ts`, run `scripts/generate-assets.ts` after every logo change |
 
 An app that cannot take a React item (vision's gallery is one HTML file) still follows every
 rule below, and ports the item's logic by hand.
 
 ## New app checklist
 
-1. `vite-plugin-pwa` writes the service worker and manifest. Pull `app-assets` and `boot` for
-   the icons, splash screens and boot screen. Never hand-roll either. (tashkeela)
+1. `vite-plugin-pwa` writes the service worker and manifest. Pull `app-assets` for the
+   icons, splash screens and first paint colour. Never hand-roll them. (tashkeela)
 2. Call `captureInstallPrompt()` and `navigator.storage?.persist()` before React mounts. The
    first is caught once or never; the second keeps the installed app's data from eviction.
    (tashkeela)
@@ -61,22 +60,24 @@ rule below, and ports the item's logic by hand.
 
 ## Launch traps
 
-Opening the app should go splash, logo, first screen, with nothing in between. tashkeela flashed
-at both handovers until all four of these held.
+Opening the app should go splash, first screen, in one colour. tashkeela took three rounds to
+learn what holds.
 
 - **One colour from splash to first screen.** The splash images, the manifest's
-  `background_color` and `theme_color`, the `theme-color` meta, `html`'s background and the boot
-  screen all take the app's own page colour, from one constant. A splash a shade off the app's
-  ground reads as a flash: tashkeela's was `#151A18` against a `#040705` app. (tashkeela)
-- **The boot logo is inline, never fetched.** An `<img src>` to the logo paints after a network
-  request, so the first frame is an empty screen. `bootScreen()` inlines it at build time.
+  `background_color` and `theme_color`, the `theme-color` meta and `html`'s background all take
+  the app's own page colour, from one constant. A splash a shade off the app's ground reads as a
+  flash: tashkeela's was `#151A18` against a `#040705` app. (tashkeela)
+- **iOS shows white frames between the splash and the first paint.** A dark installed app cold
+  starts as splash, a few white frames, then the page (WebKit bug 311569, iOS 17 to 26, open).
+  Nothing in the page removes them: inline `html` background, critical CSS and `color-scheme`
+  were all tried. (tashkeela)
+- **No in-app logo screen after the splash.** It paints after those white frames, so the launch
+  reads as two splashes with a flash between. tashkeela shipped one (a logo overlay held until
+  the first screen rendered) and removed it. Let the first screen paint on the app's colour.
   (tashkeela)
-- **The boot screen lives outside `#root`.** Inside it, React's first render replaced the logo
-  with whatever came first: an empty route while its code-split chunk loaded, or a blank loading
-  placeholder. Outside it, it stays until the first real screen has rendered. (tashkeela)
 - **iOS reads splash images once, at install.** After changing them, an installed app keeps the
-  old splash until it is removed and added again; the boot screen and colours update on the
-  next load. (tashkeela)
+  old splash until it is removed and added again; colours in the page update on the next load.
+  (tashkeela)
 
 ## Gesture and navigation traps
 
