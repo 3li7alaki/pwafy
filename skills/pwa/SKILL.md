@@ -39,8 +39,8 @@ rule below, and ports the item's logic by hand.
    (tashkeela)
 3. Pull `tab-bar`, `pull-refresh` and `install`, and set `overscroll-behavior: none` and
    `touch-action: manipulation` on `body`.
-4. Run `curb audit <url>`. It measures tap targets, input zoom, viewport units and overflow
-   at phone width, so this skill does not repeat those rules.
+4. Check it at 390 wide: every tap target at least 44px, every input at least 16px font (iOS
+   zooms the page on focus below that), and nothing scrolls sideways. (barada)
 5. Install it on a real iPhone and a real Android before calling it done. A desktop browser in
    device mode has no home screen, no notch and no Safari.
 

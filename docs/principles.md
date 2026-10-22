@@ -25,7 +25,6 @@ pwafy changing under it, and no two apps are forced to upgrade together.
 - **Somebody else's tool**: anything already done well.
   - `vite-plugin-pwa` writes the service worker and manifest.
   - Base UI's Drawer is the sheet.
-  - `curb audit` measures tap targets, input zoom, viewport units and overflow.
 
   pwafy calls these, never rewrites them.
 

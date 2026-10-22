@@ -61,8 +61,6 @@ rules and every trap, each with the app it came from.
 - Not a framework. No router, no data layer, no app shell you adopt whole.
 - Not a service worker. That is [vite-plugin-pwa](https://github.com/vite-pwa/vite-plugin-pwa).
 - Not an iOS clone. That is [Konsta UI](https://github.com/konstaui/konsta), and it is good at it.
-- Not a mobile auditor. Tap targets, input zoom and overflow are checked by
-  [curb](https://github.com/3li7alaki/curb).
 
 ## More
 

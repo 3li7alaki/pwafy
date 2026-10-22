@@ -50,7 +50,7 @@ snap it with vision at 390 wide, then try it in the hand. No gesture test suite.
 - **Every pitfall names its origin** (the app it bit) in the skill or in a comment where the
   code defends against it.
 - **Reuse before writing.** vite-plugin-pwa for the service worker, Base UI Drawer for
-  sheets, `curb audit` for mobile render checks. Never vaul: it is unmaintained.
+  sheets. Never vaul: it is unmaintained.
 - **Versions come from the registry**, never memory: `latest-version npm <pkg>`. Pins are exact.
 - **Skills and this file are human-owned.** Agents draft; the owner edits and commits.
 - No em or en dashes anywhere, code and copy included.
