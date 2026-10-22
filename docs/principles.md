@@ -10,7 +10,7 @@ of the Safari traps we already fell into once.
 
 pwafy is a [shadcn GitHub registry](https://ui.shadcn.com/docs/registry/github). An app pulls
 an item with `npx shadcn add 3li7alaki/pwafy/<item>`, the source lands in the app, and from
-then on the app owns it. Pin a tag (`#v0.1.0`) when it must be reproducible.
+then on the app owns it.
 
 There is no npm package and no runtime dependency on this repository. A fix here reaches an app
 only when someone pulls it again, on purpose. That is the trade: no app is ever broken by

@@ -21,7 +21,6 @@ so you pull an item straight into your app:
 
 ```bash
 npx shadcn add 3li7alaki/pwafy/tab-bar
-npx shadcn add 3li7alaki/pwafy/tab-bar#v0.1.0   # pinned
 ```
 
 The source lands in your app and your app owns it. There is no package to upgrade and nothing
