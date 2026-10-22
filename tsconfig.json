@@ -10,10 +10,14 @@
     "noUnusedParameters": true,
     "noEmit": true,
     "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
     "skipLibCheck": true,
+    "types": ["node"],
     "paths": {
-      "@/*": ["./*"]
+      "@/components/ui/*": ["./stubs/ui/*"],
+      "@/lib/utils": ["./stubs/utils.ts"],
+      "@/*": ["./registry/*"]
     }
   },
-  "include": ["registry"]
+  "include": ["registry", "stubs", "checks"]
 }

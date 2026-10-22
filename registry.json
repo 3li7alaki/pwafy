@@ -2,5 +2,44 @@
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "pwafy",
   "homepage": "https://github.com/3li7alaki/pwafy",
-  "items": []
+  "items": [
+    {
+      "name": "standalone",
+      "type": "registry:lib",
+      "title": "Standalone",
+      "description": "Whether the app runs from the home screen, safe to read during a server render.",
+      "files": [{ "path": "registry/lib/standalone.ts", "type": "registry:lib" }]
+    },
+    {
+      "name": "pull-refresh",
+      "type": "registry:component",
+      "title": "Pull to refresh",
+      "description": "WhatsApp-style pull to refresh: the page stays put and a circle follows the finger. Installed apps only by default.",
+      "dependencies": ["motion", "lucide-react"],
+      "registryDependencies": ["utils", "3li7alaki/pwafy/standalone"],
+      "files": [{ "path": "registry/components/pull-refresh.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "tab-bar",
+      "type": "registry:component",
+      "title": "Tab bar",
+      "description": "A floating bottom bar under the thumb with a gliding active pill. Works with any router's links.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["utils"],
+      "files": [{ "path": "registry/components/tab-bar.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "install",
+      "type": "registry:block",
+      "title": "Install card",
+      "description": "Add to home screen in whatever form the browser supports: Chromium's prompt, iOS's two taps, or out of an in-app browser.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "3li7alaki/pwafy/standalone"],
+      "docs": "Call captureInstallPrompt() from @/lib/install in your client entry, before React mounts: Chromium fires beforeinstallprompt once and early.",
+      "files": [
+        { "path": "registry/lib/install.ts", "type": "registry:lib" },
+        { "path": "registry/components/install-card.tsx", "type": "registry:component" }
+      ]
+    }
+  ]
 }

@@ -18,7 +18,10 @@ not about how an installed app looks, moves, or survives the phone does not belo
 
 ```text
 registry.json         the catalog the shadcn CLI reads from GitHub, no build step
-registry/<item>/      one directory per item, the source an app receives
+registry/lib/         lib files, laid out as they land in an app (@/lib/*)
+registry/components/  component files, same (@/components/*)
+stubs/                typecheck stand-ins for the app's own shadcn button and cn, never shipped
+checks/*.check.ts     one runnable check per piece of pure logic, node:assert, no framework
 skills/pwa/SKILL.md   the rules and pitfalls, for any stack (human-owned)
 docs/principles.md    the goal and the boundaries
 ```
@@ -27,8 +30,13 @@ docs/principles.md    the goal and the boundaries
 
 ```bash
 pnpm install
-pnpm typecheck        # tsc, strict, over registry/
+pnpm typecheck        # tsc, strict, over registry/, stubs/ and checks/
+pnpm check            # every checks/*.check.ts
 ```
+
+Item files import exactly what the app will have (`@/lib/standalone`, `@/components/ui/button`),
+so the CLI copies them unchanged. Items depend on each other by GitHub address
+(`3li7alaki/pwafy/standalone`), which resolves only once the commit is pushed.
 
 Feel is checked by a human on a real phone, through a consuming app: pull the item into it,
 snap it with vision at 390 wide, then try it in the hand. No gesture test suite.

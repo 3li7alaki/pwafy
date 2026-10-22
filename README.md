@@ -34,9 +34,10 @@ they take your style instead of bringing one.
 
 | item | what it does | state |
 |---|---|---|
-| `tab-bar` | bottom bar under the thumb, safe-area aware, animated active tab | planned |
-| `pull-refresh` | pull to refresh, standalone mode only, never fighting the browser's | planned |
-| `install` | install prompt that knows Android's native prompt from iOS's Share sheet steps | planned |
+| `tab-bar` | bottom bar under the thumb, safe-area aware, animated active tab | ready |
+| `pull-refresh` | pull to refresh, standalone mode only, never fighting the browser's | ready |
+| `install` | install prompt that knows Android's native prompt from iOS's Share sheet steps | ready |
+| `standalone` | `useStandalone()`, whether the app runs installed, safe in a server render | ready |
 | `sheet` | bottom sheet on Base UI Drawer, drag to dismiss | planned |
 | `update-prompt` | "new version ready" on top of vite-plugin-pwa's service worker | planned |
 | `share` | `navigator.share` that survives Safari, with copy-link fallback | planned |
