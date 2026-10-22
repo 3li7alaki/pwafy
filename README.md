@@ -38,6 +38,8 @@ they take your style instead of bringing one.
 | `pull-refresh` | pull to refresh, standalone mode only, never fighting the browser's | ready |
 | `install` | install prompt that knows Android's native prompt from iOS's Share sheet steps | ready |
 | `standalone` | `useStandalone()`, whether the app runs installed, safe in a server render | ready |
+| `boot` | logo held from the splash until the first real screen renders, one colour end to end | ready |
+| `app-assets` | icons, favicon, maskable icon and every Apple splash from one logo and one background | ready |
 | `sheet` | bottom sheet on Base UI Drawer, drag to dismiss | planned |
 | `update-prompt` | "new version ready" on top of vite-plugin-pwa's service worker | planned |
 | `share` | `navigator.share` that survives Safari, with copy-link fallback | planned |
