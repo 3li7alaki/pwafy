@@ -106,5 +106,5 @@ export function InstallCard({ name, icon, pitch = "Opens full screen like an app
 }
 
 function Step({ n }: { n: number }) {
-  return <span aria-hidden className="grid size-6 shrink-0 place-items-center rounded-full bg-accent text-xs font-semibold text-primary tabular-nums">{n}</span>;
+  return <span aria-hidden className="grid size-6 shrink-0 place-items-center rounded-full bg-primary/15 text-xs font-semibold text-primary tabular-nums">{n}</span>;
 }

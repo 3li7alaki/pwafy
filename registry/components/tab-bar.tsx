@@ -54,7 +54,7 @@ export function TabBarIcon({ icon: Icon, label, active, badge, pill = "tab-bar-p
 }) {
   return (
     <>
-      {active && <motion.span layoutId={pill} transition={pillSpring} className="absolute inset-0 rounded-full bg-accent" />}
+      {active && <motion.span layoutId={pill} transition={pillSpring} className="absolute inset-0 rounded-full bg-primary/15" />}
       <Icon aria-hidden strokeWidth={2} className={cn("relative size-[22px]", active && "text-primary")} />
       <span className="sr-only">{label}</span>
       {badge}
