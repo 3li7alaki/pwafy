@@ -53,6 +53,33 @@
         { "path": "registry/assets/scripts/generate-assets.ts", "type": "registry:file", "target": "scripts/generate-assets.ts" },
         { "path": "registry/vite/app-background.ts", "type": "registry:file", "target": "vite-app-background.ts" }
       ]
+    },
+    {
+      "name": "error-screen",
+      "type": "registry:block",
+      "title": "Error screen",
+      "description": "A full screen for a route that threw or a URL that matches nothing: offline, new version, not found or a bug, each with a way on.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button"],
+      "docs": "Pass it as your router's error and not-found screen (TanStack Router: defaultErrorComponent and defaultNotFoundComponent on createRouter). onHome is required: the installed app has no address bar to escape with.",
+      "files": [
+        { "path": "registry/lib/errors.ts", "type": "registry:lib" },
+        { "path": "registry/components/error-screen.tsx", "type": "registry:component" }
+      ]
+    },
+    {
+      "name": "push",
+      "type": "registry:block",
+      "title": "Push notifications",
+      "description": "Knows whether this phone can get push, asks once from a card, keeps the server holding the current subscription, and shows pushes from the service worker.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "3li7alaki/pwafy/standalone"],
+      "docs": "Add importScripts: [\"push-sw.js\"] to vite-plugin-pwa's workbox options. The server sends with web-push from a VAPID key pair; give PushCard the public key and an onSubscribe that saves the subscription, and delete it when a send answers 404 or 410. Every push must show a notification (pwa skill, Installed app traps).",
+      "files": [
+        { "path": "registry/lib/push.ts", "type": "registry:lib" },
+        { "path": "registry/components/push-card.tsx", "type": "registry:component" },
+        { "path": "registry/public/push-sw.js", "type": "registry:file", "target": "public/push-sw.js" }
+      ]
     }
   ]
 }

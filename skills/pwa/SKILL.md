@@ -1,6 +1,6 @@
 ---
 name: pwa
-description: Make a web app feel native once it is installed on a phone. Use when building or changing a PWA, an app meant for "Add to Home Screen", a mobile web shell with a bottom tab bar, pull to refresh, bottom sheets, an install prompt, or a service worker update flow; when a mobile web bug smells like Safari or iOS (share sheet does nothing, header under the notch, page rubber-bands, sounds silent, socket dead after backgrounding); and before calling any mobile web UI done.
+description: Make a web app feel native once it is installed on a phone. Use when building or changing a PWA, an app meant for "Add to Home Screen", a mobile web shell with a bottom tab bar, pull to refresh, bottom sheets, an install prompt, or a service worker update flow; when a mobile web bug smells like Safari or iOS (share sheet does nothing, header under the notch, page rubber-bands, date field wider than its card, sounds silent, socket dead after backgrounding); and before calling any mobile web UI done.
 ---
 
 # pwa
@@ -26,6 +26,8 @@ npx shadcn add 3li7alaki/pwafy/tab-bar
 | `pull-refresh` | a screen shows server data that can go stale | `onRefresh` returns the refetch promise; installed apps only unless `enabled` |
 | `install` | people should keep coming back | `captureInstallPrompt()` in the client entry, before React mounts |
 | `standalone` | anything should differ between a tab and the installed app | `useStandalone()` in render, never `matchMedia` in a state initializer |
+| `error-screen` | always: a route can throw, and a link can go stale | the router's error and not-found screen; `onHome` required |
+| `push` | people should hear about something without opening the app | `importScripts: ["push-sw.js"]` in workbox; `PushCard` with the server's VAPID public key and an `onSubscribe` that saves it |
 | `app-assets` | always, before the first install | set `background` and `logo` in `pwa-assets.config.ts`, `appBackground(background)` in `vite.config.ts`, run `scripts/generate-assets.ts` after every logo change |
 
 An app that cannot take a React item (vision's gallery is one HTML file) still follows every
@@ -102,6 +104,10 @@ learn what holds.
   lands, uses an undocumented switch-control trick that may already be patched.
 - **Base UI's iOS drawer backdrop needs a positioned `body`.** Set
   `document.body.style.position = "relative"` before mounting. (tashkeela)
+- **iOS date inputs ignore `width: 100%`.** Safari draws `date`, `time` and `datetime-local` as a
+  native control with its own minimum width, so the field pokes past its card. Set
+  `appearance: none` and `display: block` on them, and `text-align: start` on
+  `::-webkit-date-and-time-value`. (tashkeela)
 - **Read the browser after mount, or through `useSyncExternalStore`.** A user agent or
   `matchMedia` test in a state initializer differs between the server render and hydration, and
   React throws #418. (barada)
@@ -119,6 +125,20 @@ learn what holds.
   forever. A failed registration is a warning, not an error: private mode refuses it. (barada)
 - **Sockets die in the background.** Reconnect on `visibilitychange`, then resync, because every
   event sent during the gap is gone. (barada)
+- **iOS has push only from the home screen.** A Safari tab on iOS hides `PushManager` and
+  `Notification` altogether, from iOS 16.4 on. Offer install first, never a push prompt that
+  cannot work. (WebKit)
+- **Ask for notifications inside the tap.** `Notification.requestPermission()` comes first in the
+  handler, with nothing awaited before it, or Safari shows no sheet. Never ask on load. (WebKit)
+- **Every push shows a notification.** Safari revokes a site's subscription when a push shows
+  nothing, and Chrome shows its own "updated in the background" one. (WebKit, Chrome)
+- **Logging out drops the phone's subscription.** Otherwise the next account on that phone gets
+  the last one's notifications. Delete the server row while the token still works, then
+  unsubscribe. (tashkeela)
+- **A crash gets the app's own page, never the router's default.** The installed app has no
+  address bar and no reload button, so a bare "Something went wrong" strands the user. Give
+  every route error and unknown URL a page in the app's look that says what happened, with Try
+  again and Go home. (tashkeela)
 
 ## Checking it
 

@@ -38,6 +38,8 @@ they take your style instead of bringing one.
 | `install` | install prompt that knows Android's native prompt from iOS's Share sheet steps | ready |
 | `standalone` | `useStandalone()`, whether the app runs installed, safe in a server render | ready |
 | `app-assets` | icons, favicon, maskable icon and every Apple splash from one logo and one background, painted first by `index.html` too | ready |
+| `error-screen` | the router's error and not-found screen: offline, new version, not found or a bug, each with a way on | ready |
+| `push` | knows if this phone can get push, asks once from a card, keeps the server's subscription current, shows pushes | beta, not yet seen on a real phone |
 | `sheet` | bottom sheet on Base UI Drawer, drag to dismiss | planned |
 | `update-prompt` | "new version ready" on top of vite-plugin-pwa's service worker | planned |
 | `share` | `navigator.share` that survives Safari, with copy-link fallback | planned |
